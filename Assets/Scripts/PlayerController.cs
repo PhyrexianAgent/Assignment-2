@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private void TestForKeys()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
         {
             rigid.velocity += new Vector2(0, jumpHeight);
             jumped = true;
