@@ -105,6 +105,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  platformMask:
+    serializedVersion: 2
+    m_Bits: 128
   checkPos: {fileID: 245177409259770657}
   rigid: {fileID: 4362911071058379939}
   anim: {fileID: 121419944}

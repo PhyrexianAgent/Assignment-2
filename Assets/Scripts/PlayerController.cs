@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ground Check Values")]
     [SerializeField] private float radius;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private LayerMask platformMask;
     [SerializeField] private Transform checkPos;
 
     [Header("Component References")]
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     private void TestForKeys()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && onGround)
         {
             rigid.velocity += new Vector2(0, jumpHeight);
             jumped = true;
@@ -59,7 +60,9 @@ public class PlayerController : MonoBehaviour
 
     private void TestForGrounded()
     {
-        bool grounded = Physics2D.OverlapCircle(checkPos.position, radius, groundMask);
+        bool groundedGround = Physics2D.OverlapCircle(checkPos.position, radius, groundMask);
+        bool groundedPlayform = Physics2D.OverlapCircle(checkPos.position, radius, platformMask);
+        bool grounded = groundedGround || groundedPlayform;
         if (grounded && !onGround)
         {
             anim.SetTrigger("Landed");
