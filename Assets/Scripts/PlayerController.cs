@@ -66,7 +66,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (!grounded && onGround)
         {
-            //Debug.Log(jumped ? "Jump" : "Falling");
             anim.SetTrigger(jumped ? "Jump" : "Falling");
             jumped = false;
         }
