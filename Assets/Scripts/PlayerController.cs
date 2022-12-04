@@ -78,14 +78,11 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Handles.color = Color.green;
-        //Handles.draw
-        /*Gizmos.color = Color.green;
-        Vector2 boxPos = (Vector2)transform.position + rectPosition;
-        //Gizmos.DrawCube(transform.position + (Vector3)rectPosition, rectVals);
-        Gizmos.DrawLine(boxPos + rectVals, boxPos + new Vector2(0, rectVals.y));
-        Gizmos.DrawLine(boxPos, boxPos + new Vector2(0, rectVals.y));
-        Gizmos.DrawLine(boxPos, boxPos + new Vector2(rectVals.x, 0));
-        Gizmos.DrawLine(boxPos + rectVals, boxPos + new Vector2(rectVals.x, 0));*/
         Handles.DrawWireDisc(checkPos.position, Vector3.back, radius);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("dead");
     }
 }
