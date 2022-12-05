@@ -43,7 +43,7 @@ public class ExplodingPlatformController : MonoBehaviour
 
     public void DoExplosionEffects()
     {
-        bool playerDead = false;//Physics2D.OverlapCircle(transform.position, deathRadius, playerLayer);
+        bool playerDead = Physics2D.OverlapCircle(transform.position, deathRadius, playerLayer);
         bool pushPlayer = Physics2D.OverlapCircle(transform.position, pushRadius, playerLayer);
         if (playerDead)
         {

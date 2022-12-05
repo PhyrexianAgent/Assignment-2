@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rigid;
     public Animator anim;
     public SpriteRenderer spriteRender;
+    public CinemachineVirtualCamera follwingCamera;
 
     public static PlayerController instance;
 
@@ -93,7 +95,8 @@ public class PlayerController : MonoBehaviour
 
     public void KillPlayer()
     {
-        Debug.Log("dead");
+        follwingCamera.Follow = null;
+        EndGameCanvasController.instance.EndGame();
     }
 
     public void PushFromExplosion(Vector2 pushAmount)
