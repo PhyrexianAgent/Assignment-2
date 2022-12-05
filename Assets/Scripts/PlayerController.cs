@@ -21,12 +21,15 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     public SpriteRenderer spriteRender;
 
+    public static PlayerController instance;
+
     private bool onGround = true;
     private bool jumped = false;
+    private bool canMoveInAir = true;
 
     void Start()
     {
-        
+        instance = this;
     }
 
     // Update is called once per frame
@@ -39,12 +42,18 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         int moveDir = Convert.ToInt32(Input.GetKey(KeyCode.D)) - Convert.ToInt32(Input.GetKey(KeyCode.A));
-        rigid.velocity = new Vector2(moveDir * speed, rigid.velocity.y);
-        anim.SetBool("isMoving", moveDir != 0);
-        
-        if (moveDir != 0)
+        if (canMoveInAir) {
+            rigid.velocity = new Vector2(moveDir * speed, rigid.velocity.y);
+            anim.SetBool("isMoving", moveDir != 0);
+
+            if (moveDir != 0)
+            {
+                spriteRender.flipX = moveDir == -1;
+            }
+        }
+        else if (rigid.velocity.y <= 0.1)
         {
-            spriteRender.flipX = moveDir == -1;
+            canMoveInAir = true;
         }
     }
 
@@ -66,6 +75,7 @@ public class PlayerController : MonoBehaviour
         if (grounded && !onGround)
         {
             anim.SetTrigger("Landed");
+            canMoveInAir = true;
         }
         else if (!grounded && onGround)
         {
@@ -81,8 +91,22 @@ public class PlayerController : MonoBehaviour
         Handles.DrawWireDisc(checkPos.position, Vector3.back, radius);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void KillPlayer()
     {
         Debug.Log("dead");
+    }
+
+    public void PushFromExplosion(Vector2 pushAmount)
+    {
+        canMoveInAir = false;
+        rigid.velocity = pushAmount;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Damage Area")
+        {
+            KillPlayer();
+        }
     }
 }
