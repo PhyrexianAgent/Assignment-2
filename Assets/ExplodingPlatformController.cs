@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class ExplodingPlatformController : MonoBehaviour
 {
@@ -32,7 +34,7 @@ public class ExplodingPlatformController : MonoBehaviour
             anim.enabled = true;
         }
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = Color.red;
@@ -40,6 +42,7 @@ public class ExplodingPlatformController : MonoBehaviour
         Handles.color = Color.yellow;
         Handles.DrawWireDisc(transform.position, Vector3.back, pushRadius);
     }
+#endif
 
     public void DoExplosionEffects()
     {
